@@ -5,14 +5,14 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def hello():
     return render_template("index.html")
 
 
 @app.route("/user_form")
 def new_user():
-    print('user_form')
+    print("user_form")
     return render_template("user.html")
 
 
@@ -26,9 +26,7 @@ def user_info():
             with sql.connect("database.db") as con:
                 cur = con.cursor()
                 cur.execute(
-                    """
-                            INSERT INTO users (email, password) VALUES (?,?)
-                    """,
+                    "INSERT INTO users (email, password) VALUES (?,?)",
                     (user_email, user_password),
                 )
             msg = "Success"
@@ -52,6 +50,47 @@ def list():
     rows = cur.fetchall()
     return render_template("list.html", rows=rows)
 
+
+"""
+@app.route("/dest_form")
+def new_user():
+    print("dest_form")
+    return render_template("dest_form.html")
+
+
+@app.route("/dest_result")
+def dest():
+    con = sql.connect("dest_database.db")
+    con.row_factory = sql.Row
+
+    cur = con.cursor()
+    cur.execute("select * from dests limit 1")
+
+    dest = cur.fetchall()
+    return render_template("dest_result.html", dest=dest)
+
+
+@app.route("/dest_info", methods=["POST", "GET"])
+def dest_result():
+    if request.method == "POST":
+        try:
+            temp = request.form["dest"]
+
+            with sql.connect("dest_database.db") as con:
+                cur = con.cursor()
+                cur.execute(
+                    "INSERT INTO dests (dest) VALUES (?)",
+                    (temp),
+                )
+            msg = "Success"
+            con.close()
+
+        except:
+            con.rollback()
+            msg = "error"
+        finally:
+            return render_template("result.html", msg=msg)
+"""
 
 if __name__ == "__main__":
     app.debug = True
