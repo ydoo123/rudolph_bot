@@ -2,12 +2,18 @@
 
 <body>
     <form action="{{ url_for('dest_info') }}" method="POST">
-        <h3>Dest Information</h3>
-        dest_1<br>
-        <input type="text" name="dest_1" /></br>
+        <h3>수령인 정보</h3>
+        이름<br>
+        <input type="text" name="name" /></br>
 
-        Choose Destination<br>
-        <textarea name="dest_2"></textarea></br>
+        전화번호<br>
+        <input type="text" name="phone_number" /></br>
+
+        목적지 주소<br>
+        <input type="text" name="dest" /></br>
+
+        수령 방법<br>
+        <textarea name="method"></textarea></br>
         <input type="submit" name="submit" />
     </form>
 </body>
