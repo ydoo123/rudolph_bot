@@ -87,13 +87,14 @@ def dest_info():
 def dest_result():
     con = sql.connect("database.db")  # database.db파일에 접근.
     cur = con.cursor()
-    cur.execute("select dest from dests limit 1")
+    cur.execute("select dest, method from dests limit 1")
 
     rows = cur.fetchall()
-    result = str(rows[0][0])
+    dest = str(rows[0][0])
+    method = str(rows[0][1])
 
     con.close()
-    return render_template("dest_result.html", result=result)
+    return render_template("dest_result.html", dest=dest, method=method)
 
 
 if __name__ == "__main__":
