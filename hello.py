@@ -61,10 +61,10 @@ def new_dest():
 def dest_info():
     if request.method == "POST":
         try:
-            name = request.form["name"]
-            phone_number = request.form["phone_number"]
-            dest = request.form["dest"]
-            method = request.form["method"]
+            name = request.form["name"]  # 이름
+            phone_number = request.form["phone_number"]  # 전화번호
+            dest = request.form["dest"]  # 목적지
+            method = request.form["method"]  # 수령방법
 
             with sql.connect("database.db") as con:
 
