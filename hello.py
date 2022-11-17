@@ -70,7 +70,7 @@ def dest_info():
 
                 cur = con.cursor()
                 cur.execute(
-                    "INSERT INTO dests (name, phone_number, dest, method) VALUES (?,?)",
+                    "INSERT INTO dests (name, phone_number, dest, method) VALUES (?,?,?,?)",
                     (name, phone_number, dest, method),
                 )
             msg = "Success"
