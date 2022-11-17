@@ -6,7 +6,7 @@ print("create db success")
 
 conn.execute(
     """
-    CREATE TABLE dests (name text, phone_number text, dest text, method text);
+    alter table dests add column time [smalldatetime];
     """
 )
 print("create table success")

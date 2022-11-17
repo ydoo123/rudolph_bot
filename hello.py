@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import json
+import datetime
 
 from flask import Flask, render_template, request
 
@@ -62,17 +63,21 @@ def new_dest():
 def dest_info():
     if request.method == "POST":
         try:
+            f = "%Y-%m-%d %H:%M:%S"
+
             name = request.form["name"]  # 이름
             phone_number = request.form["phone_number"]  # 전화번호
             dest = request.form["dest"]  # 목적지
             method = request.form["method"]  # 수령방법
+            time_val = datetime.datetime.now()
+            time_val = time_val.strftime(f)
 
             with sql.connect("database.db") as con:
 
                 cur = con.cursor()
                 cur.execute(
-                    "INSERT INTO dests (name, phone_number, dest, method) VALUES (?,?,?,?)",
-                    (name, phone_number, dest, method),
+                    "INSERT INTO dests (name, phone_number, dest, method, time) VALUES (?,?,?,?,?)",
+                    (name, phone_number, dest, method, time_val),
                 )
             msg = "Success"
             con.close()
@@ -102,7 +107,7 @@ def dest_result():
 def get_dest():  # access to get dest json
     con = sql.connect("database.db")  # database.db파일에 접근.
     cur = con.cursor()
-    cur.execute("select dest, method from dests limit 1")
+    cur.execute("select dest, method from dests order by time desc limit 1")
 
     rows = cur.fetchall()
     dest = str(rows[0][0])
