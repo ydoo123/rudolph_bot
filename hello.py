@@ -61,15 +61,17 @@ def new_dest():
 def dest_info():
     if request.method == "POST":
         try:
-            result_1 = request.form["dest_1"]
-            result_2 = request.form["dest_2"]
+            name = request.form["name"]
+            phone_number = request.form["phone_number"]
+            dest = request.form["dest"]
+            method = request.form["method"]
 
             with sql.connect("database.db") as con:
 
                 cur = con.cursor()
                 cur.execute(
-                    "INSERT INTO dests (dest, temp) VALUES (?,?)",
-                    (result_1, result_2),
+                    "INSERT INTO dests (name, phone_number, dest, method) VALUES (?,?)",
+                    (name, phone_number, dest, method),
                 )
             msg = "Success"
             con.close()
