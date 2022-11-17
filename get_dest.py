@@ -11,12 +11,16 @@ method == 0 이면 직접 수령, method == 1 이면 문 앞에 놓고 가기
 import requests
 import json
 
-URL = "http://140.238.28.123/get_dest"
-response = requests.get(URL)
 
-result = json.loads(response.text)
-print(result)
-print(type(result))
+def get_dest_dict():
+    URL = "http://140.238.28.123/get_dest"
+    response = requests.get(URL)
 
-# print(response.status_code)
-# print(response.text)
+    result = json.loads(response.text)
+    return result
+
+
+if __name__ == "__main__":
+    result = get_dest_dict()
+    print(result)
+    print(type(result))
