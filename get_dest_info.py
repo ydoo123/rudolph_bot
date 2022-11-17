@@ -20,6 +20,16 @@ def get_dest_dict():
     return result
 
 
+def get_dest():
+    result_dict = get_dest_dict()
+    return result_dict["dest"]
+
+
+def get_method():
+    result_dict = get_dest_dict()
+    return result_dict["method"]
+
+
 if __name__ == "__main__":
     result = get_dest_dict()
     print(result)
