@@ -1,4 +1,5 @@
 import sqlite3 as sql
+import json
 
 from flask import Flask, render_template, request
 
@@ -95,6 +96,23 @@ def dest_result():
 
     con.close()
     return render_template("dest_result.html", dest=dest, method=method)
+
+
+@app.route("/get_dest")
+def get_dest():  # access to get dest json
+    con = sql.connect("database.db")  # database.db파일에 접근.
+    cur = con.cursor()
+    cur.execute("select dest, method from dests limit 1")
+
+    rows = cur.fetchall()
+    dest = str(rows[0][0])
+    method = str(rows[0][1])
+
+    con.close()
+    result_dict = {"dest": dest, "method": method}
+    result_json = json.dumps(result_dict)
+
+    return result_json
 
 
 if __name__ == "__main__":
