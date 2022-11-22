@@ -5,6 +5,7 @@ import datetime
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 @app.route("/")
@@ -63,14 +64,13 @@ def new_dest():
 def dest_info():
     if request.method == "POST":
         try:
-            f = "%Y-%m-%d %H:%M:%S"
-
             name = request.form["name"]  # 이름
             phone_number = request.form["phone_number"]  # 전화번호
             dest = request.form["dest"]  # 목적지
             method = request.form["method"]  # 수령방법
-            time_val = datetime.datetime.now()
-            time_val = time_val.strftime(f)
+
+            time_now = datetime.datetime.now()
+            time_val = time_now.strftime(TIME_FORMAT)
 
             with sql.connect("database.db") as con:
 
