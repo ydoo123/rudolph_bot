@@ -12,22 +12,22 @@ import requests
 import json
 
 
-def get_dest_dict():
+def get_dest_dict() -> dict:
     URL = "http://140.238.28.123/get_dest"
     response = requests.get(URL)
 
-    result = json.loads(response.text)
-    return result
+    return_dict = json.loads(response.text)
+    return return_dict
 
 
 def get_dest():
     result_dict = get_dest_dict()
-    return result_dict["dest"]
+    return result_dict["dest"]  # str
 
 
 def get_method():
     result_dict = get_dest_dict()
-    return result_dict["method"]
+    return result_dict["method"]  # str
 
 
 if __name__ == "__main__":
