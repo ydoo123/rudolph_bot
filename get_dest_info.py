@@ -20,13 +20,13 @@ def get_dest_dict() -> dict:
     return return_dict
 
 
-def get_dest():
-    result_dict = get_dest_dict()
+def get_dest() -> str:
+    result_dict: dict = get_dest_dict()
     return result_dict["dest"]  # str
 
 
-def get_method():
-    result_dict = get_dest_dict()
+def get_method() -> str:
+    result_dict: dict = get_dest_dict()
     return result_dict["method"]  # str
 
 
