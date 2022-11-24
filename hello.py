@@ -1,6 +1,8 @@
 import sqlite3 as sql
 import json
 import datetime
+import os
+from werkzeug.utils import secure_filename
 
 from flask import Flask, render_template, request
 
@@ -118,6 +120,38 @@ def get_dest():  # access to get dest json
     result_json = json.dumps(result_dict)
 
     return result_json
+
+
+@app.route("/fileUpload", methods=["GET", "POST"])
+def file_upload():
+    if request.method == "POST":
+        f = request.files["file"]
+        f.save("static/uploads/" + secure_filename(f.filename))
+        files = os.listdir("static/uploads")
+
+        con = sql.connect("database.db")
+        cursor = con.cursor()
+        # 파일명과 파일경로를 데이터베이스에 저장함
+        query = "INSERT INTO images (image_name, image_dir) VALUES ('%s', '%s')" % (
+            secure_filename(f.filename),
+            "uploads/" + secure_filename(f.filename),
+        )
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        if not data:
+            con.commit()
+            cursor.close()
+            con.close()
+
+            return "not data"
+
+        else:
+            con.rollback()
+            cursor.close()
+            con.close()
+
+            return "upload failed"
 
 
 if __name__ == "__main__":
