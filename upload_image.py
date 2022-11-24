@@ -13,7 +13,7 @@ def upload_image(file_name, file_path):
         "Content-Type": "image/jpg",
         # "Content-Length": l,
     }
-    r = requests.post(url, files=files)
+    requests.post(url, files=files)
     return None
 
 
