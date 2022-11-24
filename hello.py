@@ -125,6 +125,9 @@ def get_dest():  # access to get dest json
 @app.route("/fileUpload", methods=["GET", "POST"])
 def file_upload():
     if request.method == "POST":
+        time_now = datetime.datetime.now()
+        time_val = time_now.strftime(TIME_FORMAT)
+
         f = request.files["file"]
         f.save("static/uploads/" + secure_filename(f.filename))
         files = os.listdir("static/uploads")
@@ -132,11 +135,14 @@ def file_upload():
         con = sql.connect("database.db")
         cursor = con.cursor()
         # 파일명과 파일경로를 데이터베이스에 저장함
-        query = "INSERT INTO images (image_name, image_dir) VALUES ('%s', '%s')" % (
-            secure_filename(f.filename),
-            "uploads/" + secure_filename(f.filename),
+        cursor.execute(
+            "INSERT INTO images (image_name, image_dir, time) VALUES (?, ?, ?)",
+            (
+                secure_filename(f.filename),
+                "uploads/" + secure_filename(f.filename),
+                time_val,
+            ),
         )
-        cursor.execute(query)
         data = cursor.fetchall()
 
         if not data:

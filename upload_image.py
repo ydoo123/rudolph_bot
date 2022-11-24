@@ -2,9 +2,9 @@ import requests
 import json
 
 
-def get_url():
-    filename = "jpeg420exif.jpg"
-    filepath = f"/home/ubuntu/test_server/rudolph_bot/test/image/{filename}"
+def upload_image(file_name, file_path):
+    filename = file_name
+    filepath = file_path
 
     url = "http://140.238.28.123/fileUpload"
 
@@ -18,4 +18,8 @@ def get_url():
 
 
 if __name__ == "__main__":
-    result = get_url()
+    
+    filename = "jpeg420exif.jpg"
+    filepath = f"/home/ubuntu/test_server/rudolph_bot/test/image/{filename}"
+    
+    result = upload_image(filename, filepath)
