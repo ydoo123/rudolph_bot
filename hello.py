@@ -60,12 +60,6 @@ def new_dest():
     return render_template("dest_form.html")
 
 
-@app.route("/dest_form_test")
-def new_dest_test():
-    print("dest_form")
-    return render_template("dest_form_test.html")
-
-
 @app.route("/dest_info", methods=["POST", "GET"])
 def dest_info():
     if request.method == "POST":
@@ -73,7 +67,7 @@ def dest_info():
             name = request.form["name"]  # 이름
             phone_number = request.form["phone_number"]  # 전화번호
             dest = request.form["dest"]  # 목적지
-            method = request.form["method"]  # 수령방법
+            method = request.form.get("method")  # 수령방법
 
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
