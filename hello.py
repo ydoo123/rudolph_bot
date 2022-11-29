@@ -67,7 +67,7 @@ def dest_info():
             name = request.form["name"]  # 이름
             phone_number = request.form["phone_number"]  # 전화번호
             dest = request.form["dest"]  # 목적지
-            method = request.form["method"]  # 수령방법
+            method = request.form.get("method")  # 수령방법
 
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
