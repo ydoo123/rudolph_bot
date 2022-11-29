@@ -60,6 +60,12 @@ def new_dest():
     return render_template("dest_form.html")
 
 
+@app.route("/dest_form_test")
+def new_dest_test():
+    print("dest_form")
+    return render_template("dest_form_test.html")
+
+
 @app.route("/dest_info", methods=["POST", "GET"])
 def dest_info():
     if request.method == "POST":
