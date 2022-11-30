@@ -6,8 +6,12 @@ from werkzeug.utils import secure_filename
 
 from flask import Flask, render_template, request
 
+from check_value import format_phone_number, check_dest, check_phone_number
+
 app = Flask(__name__)
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+dest_list = [str(i) for i in range(101, 132)]
+dest_list.append("128-1")
 
 
 @app.route("/")
@@ -69,7 +73,17 @@ def dest_info():
             name = request.form["name"]  # 이름
             phone_number = request.form["phone_number"]  # 전화번호
             dest = request.form["dest"]  # 목적지
-            method = request.form["method"]  # 수령방법
+            method = request.form.get("method")  # 수령방법
+
+            phone_number = format_phone_number(phone_number)
+
+            msg = check_dest(dest)
+            if msg != True:
+                return render_template("result.html", msg=msg)
+
+            msg = check_phone_number(phone_number)
+            if msg != True:
+                return render_template("result.html", msg=msg)
 
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
