@@ -1,11 +1,17 @@
 import sqlite3 as sql
 import json
 import datetime
+import os
+from werkzeug.utils import secure_filename
 
 from flask import Flask, render_template, request
 
+from check_value import format_phone_number, check_dest, check_phone_number
+
 app = Flask(__name__)
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+dest_list = [str(i) for i in range(101, 132)]
+dest_list.append("128-1")
 
 
 @app.route("/")
@@ -69,6 +75,16 @@ def dest_info():
             dest = request.form["dest"]  # 목적지
             method = request.form.get("method")  # 수령방법
 
+            phone_number = format_phone_number(phone_number)
+
+            msg = check_dest(dest)
+            if msg != True:
+                return render_template("result.html", msg=msg)
+
+            msg = check_phone_number(phone_number)
+            if msg != True:
+                return render_template("result.html", msg=msg)
+
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
 
@@ -118,6 +134,40 @@ def get_dest():  # access to get dest json
     result_json = json.dumps(result_dict)
 
     return result_json
+
+
+@app.route("/fileUpload", methods=["GET", "POST"])
+def file_upload():
+    try:
+        if request.method == "POST":
+            time_now = datetime.datetime.now()
+            time_val = time_now.strftime(TIME_FORMAT)
+
+            file = request.files["file"]
+            file.save("static/uploads/" + secure_filename(file.filename))
+            # files = os.listdir("static/uploads")
+
+            con = sql.connect("database.db")
+            cursor = con.cursor()
+            # 파일명과 파일경로를 데이터베이스에 저장함
+            cursor.execute(
+                "INSERT INTO images (image_name, image_dir, time) VALUES (?, ?, ?)",
+                (
+                    secure_filename(file.filename),
+                    "static/uploads/" + secure_filename(file.filename),
+                    time_val,
+                ),
+            )
+            con.close()
+
+            return "susccess"
+
+    except:
+        con.rollback()
+        cursor.close()
+        con.close()
+
+        return "upload failed"
 
 
 if __name__ == "__main__":

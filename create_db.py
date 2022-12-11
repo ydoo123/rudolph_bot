@@ -6,7 +6,7 @@ print("create db success")
 
 conn.execute(
     """
-    alter table dests add column time [smalldatetime];
+    create table images (image_name text, image_dir text, time SMALLDATETIME);
     """
 )
 print("create table success")

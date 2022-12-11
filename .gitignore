@@ -3,4 +3,5 @@ test.ini
 test.sock
 uwsgi.log
 test/
+.idea
 database.db
