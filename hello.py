@@ -4,7 +4,7 @@ import datetime
 import os
 from werkzeug.utils import secure_filename
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 from check_value import format_phone_number, check_dest, check_phone_number
 
@@ -101,8 +101,10 @@ def dest_info():
         except:
             con.rollback()
             msg = "error"
-        finally:
             return render_template("result.html", msg=msg)
+
+        finally:
+            return redirect("http://140.238.28.123/form_result", code=302)
 
 
 @app.route("/dest_result")
@@ -168,6 +170,11 @@ def file_upload():
         con.close()
 
         return "upload failed"
+
+
+@app.route("/form_result")
+def form_result():
+    return render_template("form_result.html")
 
 
 if __name__ == "__main__":
