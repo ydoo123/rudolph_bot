@@ -75,17 +75,9 @@ def dest_info():
     if request.method == "POST":
         try:
             name = request.form["name"]  # 이름
-            phone_number = format_phone_number(request.form["phone_number"])  # 전화번호
+            phone_number = request.form["phone_number"]  # 전화번호
             dest = request.form["dest"]  # 목적지
             method = request.form["method"]  # 수령방법
-
-            msg = check_dest(dest, dest_list)
-            if msg != True:
-                return render_template("error.html", msg=msg)
-
-            msg = check_phone_number(phone_number)
-            if msg != True:
-                return render_template("error.html", msg=msg)
 
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
