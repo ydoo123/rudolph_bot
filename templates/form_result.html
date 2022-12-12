@@ -27,6 +27,9 @@
     <link rel="stylesheet" type="text/css" href="static/css/util.css">
     <link rel="stylesheet" type="text/css" href="static/css/main.css">
     <!--===============================================================================================-->
+    <style>
+        img { display: block; margin: 10px auto; margin-bottom: 30px; }
+    </style>
 </head>
 
 <body>
@@ -37,8 +40,8 @@
                 <form class="login100-form validate-form" action="{{ url_for('dest_info') }}" method="POST">
                     <span class="login100-form-title p-b-49">
                         주문이 접수되었습니다
-                    </span>
-                    <img style="margin-bottom: 10px;" width="350" height="350" border="2" src={{map}}>
+                    </span> 
+                    <img style="border: 2px solid;" width="100%" height="100%" src={{map}}>
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
