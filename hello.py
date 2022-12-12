@@ -133,6 +133,22 @@ def get_dest():  # access to get dest json
     return result_json
 
 
+@app.route("/status")
+def status():
+    con = sql.connect("database.db")  # database.db파일에 접근.
+    cur = con.cursor()
+    cur.execute("select dest, time from dests order by time desc limit 1")
+
+    rows = cur.fetchall()
+    dest = str(rows[0][0])
+    time = str(rows[0][1])
+    splited_time = time.split(" ")
+    hour = splited_time[1].split(":")[0]
+    minute = splited_time[1].split(":")[1]
+
+    return render_template("status.html", dest=dest, hour=hour, minute=minute)
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
