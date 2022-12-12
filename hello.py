@@ -3,8 +3,10 @@ import json
 import datetime
 
 from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
 
 from check_value import format_phone_number, check_dest, check_phone_number
+import os
 
 app = Flask(__name__)
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -147,6 +149,44 @@ def status():
     minute = splited_time[1].split(":")[1]
 
     return render_template("status.html", dest=dest, hour=hour, minute=minute)
+
+
+@app.route("/fileUpload", methods=["GET", "POST"])
+def file_upload():
+    if request.method == "POST":
+        time_now = datetime.datetime.now()
+        time_val = time_now.strftime(TIME_FORMAT)
+
+        f = request.files["file"]
+        f.save("static/uploads/" + secure_filename(f.filename))
+        files = os.listdir("static/uploads")
+
+        con = sql.connect("database.db")
+        cursor = con.cursor()
+        # 파일명과 파일경로를 데이터베이스에 저장함
+        cursor.execute(
+            "INSERT INTO images (image_name, image_dir, time) VALUES (?, ?, ?)",
+            (
+                secure_filename(f.filename),
+                "uploads/" + secure_filename(f.filename),
+                time_val,
+            ),
+        )
+        data = cursor.fetchall()
+
+        if not data:
+            con.commit()
+            cursor.close()
+            con.close()
+
+            return "not data"
+
+        else:
+            con.rollback()
+            cursor.close()
+            con.close()
+
+            return "upload failed"
 
 
 if __name__ == "__main__":
