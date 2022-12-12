@@ -37,7 +37,7 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('static/images/bg-01.jpg');">
             <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-                <form class="login100-form validate-form" action="{{ url_for('dest_info') }}" method="POST">
+                <div class="login100-form validate-form">
                     <span class="login100-form-title p-b-49">
                         주문이 접수되었습니다
                     </span> 
@@ -45,12 +45,12 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" type="submit" name="submit">
+                            <button class="login100-form-btn" onclick="location.href='/dest_form'">
                                 확인
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
