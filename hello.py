@@ -41,7 +41,7 @@ def user_info():
             con.rollback()
             msg = "error"
         finally:
-            return render_template("result.html", msg=msg)
+            return render_template("error.html", msg=msg)
 
 
 @app.route("/list")
@@ -81,11 +81,11 @@ def dest_info():
 
             msg = check_dest(dest, dest_list)
             if msg != True:
-                return render_template("result.html", msg=msg)
+                return render_template("error.html", msg=msg)
 
             msg = check_phone_number(phone_number)
             if msg != True:
-                return render_template("result.html", msg=msg)
+                return render_template("error.html", msg=msg)
 
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
@@ -107,7 +107,7 @@ def dest_info():
         except:
             con.rollback()
             msg = "error"
-            return render_template("result.html", msg=msg)
+            return render_template("error.html", msg=msg)
 
 
 @app.route("/dest_result")
