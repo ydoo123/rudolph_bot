@@ -92,7 +92,9 @@ def dest_info():
             return render_template("result.html", msg=msg)
 
         finally:
-            return render_template("form_result.html")
+            return render_template(
+                "form_result.html", map=f"static/images/maps/map_{dest}.png"
+            )
 
 
 @app.route("/dest_result")
