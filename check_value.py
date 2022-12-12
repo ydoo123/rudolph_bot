@@ -1,6 +1,3 @@
-from hello import dest_list
-
-
 def format_phone_number(phone_number):
     """
     전화번호에서 '-'를 제거하는 함수
@@ -9,7 +6,7 @@ def format_phone_number(phone_number):
     return result
 
 
-def check_dest(dest):
+def check_dest(dest, dest_list):
     """
     dest 판별하는 함수
     """

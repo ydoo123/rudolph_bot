@@ -4,6 +4,8 @@ import datetime
 
 from flask import Flask, render_template, request
 
+from check_value import format_phone_number, check_dest, check_phone_number
+
 app = Flask(__name__)
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
@@ -68,12 +70,22 @@ def new_dest_test():
 
 @app.route("/dest_info", methods=["POST", "GET"])
 def dest_info():
+    dest_list = [str(i) for i in range(113, 132)]
+
     if request.method == "POST":
         try:
             name = request.form["name"]  # 이름
-            phone_number = request.form["phone_number"]  # 전화번호
+            phone_number = format_phone_number(request.form["phone_number"])  # 전화번호
             dest = request.form["dest"]  # 목적지
             method = request.form["method"]  # 수령방법
+
+            msg = check_dest(dest, dest_list)
+            if msg != True:
+                return render_template("result.html", msg=msg)
+
+            msg = check_phone_number(phone_number)
+            if msg != True:
+                return render_template("result.html", msg=msg)
 
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
@@ -88,15 +100,14 @@ def dest_info():
             msg = "Success"
             con.close()
 
+            return render_template(
+                "form_result.html", map=f"static/images/maps/map_{dest}.png"
+            )
+
         except:
             con.rollback()
             msg = "error"
             return render_template("result.html", msg=msg)
-
-        finally:
-            return render_template(
-                "form_result.html", map=f"static/images/maps/map_{dest}.png"
-            )
 
 
 @app.route("/dest_result")
