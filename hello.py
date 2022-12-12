@@ -4,9 +4,7 @@ import datetime
 import os
 from werkzeug.utils import secure_filename
 
-from flask import Flask, render_template, request, redirect
-
-from check_value import format_phone_number, check_dest, check_phone_number
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -75,16 +73,6 @@ def dest_info():
             dest = request.form["dest"]  # 목적지
             method = request.form.get("method")  # 수령방법
 
-            phone_number = format_phone_number(phone_number)
-
-            msg = check_dest(dest)
-            if msg != True:
-                return render_template("result.html", msg=msg)
-
-            msg = check_phone_number(phone_number)
-            if msg != True:
-                return render_template("result.html", msg=msg)
-
             time_now = datetime.datetime.now()
             time_val = time_now.strftime(TIME_FORMAT)
 
@@ -104,7 +92,7 @@ def dest_info():
             return render_template("result.html", msg=msg)
 
         finally:
-            return redirect("http://140.238.28.123/form_result", code=302)
+            return render_template("form_result.html")
 
 
 @app.route("/dest_result")
