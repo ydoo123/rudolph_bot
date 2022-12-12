@@ -2,7 +2,8 @@ def format_phone_number(phone_number):
     """
     전화번호에서 '-'를 제거하는 함수
     """
-    result = phone_number.strip("-")
+    num_list = phone_number.split("-")
+    result = "".join(num_list)
     return result
 
 
