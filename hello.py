@@ -155,7 +155,7 @@ def status():
 @app.route("/fileUpload", methods=["GET", "POST"])
 def file_upload():
     if request.method == "POST":
-        time_now = datetime.datetime.now()
+        time_now = datetime.datetime.now() + datetime.timedelta(hours=9)
         time_val = time_now.strftime(TIME_FORMAT)
 
         f = request.files["file"]
