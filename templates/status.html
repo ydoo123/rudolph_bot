@@ -10,7 +10,9 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
@@ -41,12 +43,18 @@
 
                     <button class="box_main" onclick="location.href='/status_main'">
                         <div class="box">
-                            <div style="align-items: center; display: flex;" class="login100-form-h2">
-                                진행 중
+                            <div class="box_in">
+                                <div style="align-items: center; display: flex; float: left; margin-right: 20px;" class="login100-form-h2">
+                                    1
+                                </div>
+                                <div style="align-items: center; display: flex;" class="login100-form-h2">
+                                    진행 중
+                                </div>
                             </div>
-                            <div style="align-items: center; display: flex;" class="login100-form-h2">
-                                {{ dest }}호<br>{{ hour}}시 {{ minute }}분
-                            </div>
+                                <div style="align-items: center; display: flex;" class="login100-form-h2">
+                                    {{ dest }}호<br>{{ hour}} : {{ minute }}
+                                </div>
+
                         </div>
                     </button>
 
