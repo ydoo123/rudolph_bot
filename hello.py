@@ -169,7 +169,7 @@ def file_upload():
             "INSERT INTO images (image_name, image_dir, time) VALUES (?, ?, ?)",
             (
                 secure_filename(f.filename),
-                "uploads/" + secure_filename(f.filename),
+                "static/uploads/" + secure_filename(f.filename),
                 time_val,
             ),
         )
