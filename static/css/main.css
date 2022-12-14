@@ -61,7 +61,7 @@
 .wrapper{
   display: inline-flex;
   height: 100px;
-  width: 400px;
+  width: 100%;
   align-items: center;
   justify-content: space-evenly;
   border-radius: 5px;
