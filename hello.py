@@ -190,6 +190,45 @@ def file_upload():
             return "upload failed"
 
 
+@app.route("/status_main")
+def status_main():
+    con = sql.connect("database.db")  # database.db파일에 접근.
+
+    cur_dest = con.cursor()
+    cur_dest.execute("select dest, time from dests order by time desc limit 1")
+    rows_dest = cur_dest.fetchall()
+
+    dest = str(rows_dest[0][0])
+    time_dest = str(rows_dest[0][1])
+
+    cur_image = con.cursor()
+    cur_image.execute(
+        "select image_name, image_dir, time from images order by time desc limit 1"
+    )
+    rows_image = cur_image.fetchall()
+    if not rows_image:
+        return render_template(
+            "status_loading.html", map=f"static/images/maps/map_{dest}.png"
+        )
+    image_name = str(rows_image[0][0])
+    image_dir = str(rows_image[0][1])
+    time_image = str(rows_image[0][2])
+
+    if time_image > time_dest:
+        return render_template(
+            "status_main.html",
+            image=image_dir,
+            map=f"static/images/maps/map_{dest}.png",
+        )
+
+    else:
+        return render_template(
+            "status_loading.html", map=f"static/images/maps/map_{dest}.png"
+        )
+
+    return None
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
