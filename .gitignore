@@ -5,3 +5,4 @@ uwsgi.log
 test/
 .idea
 database.db
+static/uploads/
