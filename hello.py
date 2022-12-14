@@ -81,7 +81,7 @@ def dest_info():
             dest = request.form["dest"]  # 목적지
             method = request.form["method"]  # 수령방법
 
-            time_now = datetime.datetime.now()
+            time_now = datetime.datetime.now() + datetime.timedelta(hours=9)
             time_val = time_now.strftime(TIME_FORMAT)
 
             with sql.connect("database.db") as con:
