@@ -122,14 +122,15 @@ def dest_result():
 def get_dest():  # access to get dest json
     con = sql.connect("database.db")  # database.db파일에 접근.
     cur = con.cursor()
-    cur.execute("select dest, method from dests order by time desc limit 1")
+    cur.execute("select dest, method, time from dests order by time desc limit 1")
 
     rows = cur.fetchall()
     dest = str(rows[0][0])
     method = str(rows[0][1])
+    time = str(rows[0][2])
 
     con.close()
-    result_dict = {"dest": dest, "method": method}
+    result_dict = {"dest": dest, "method": method, "time": time}
     result_json = json.dumps(result_dict)
 
     return result_json
